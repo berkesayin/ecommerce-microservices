@@ -20,9 +20,11 @@ services:
     image: dpage/pgadmin4
     container_name: ms-pgadmin
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-sayinberke34@gmail.com}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-pg-ui-12}
-      PGADMIN_CONFIG_SERVER_MODE: "False"
+      # PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-sayinberke34@gmail.com}
+      # PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-pg-ui-12}
+      PGADMIN_DEFAULT_EMAIL: sayinberke34@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: pg-ui-1234
+      # PGADMIN_CONFIG_SERVER_MODE: "False"
     volumes:
       - pgadmin:/var/lib/pgadmin
     ports:
