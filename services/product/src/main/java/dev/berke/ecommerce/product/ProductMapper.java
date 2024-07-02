@@ -34,4 +34,14 @@ public class ProductMapper {
         );
     }
 
+    public PurchaseProductResponse toPurchaseProductResponse(Product product, double quantity) {
+        return new PurchaseProductResponse(
+                product.getId(),
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                quantity
+        );
+    }
+
 }

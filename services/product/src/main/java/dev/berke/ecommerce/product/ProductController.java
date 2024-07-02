@@ -19,6 +19,13 @@ public class ProductController {
         return ResponseEntity.ok(productService.createProduct(productRequest));
     }
 
+    @PostMapping("/purchase")
+    public ResponseEntity<List<PurchaseProductResponse>> purchaseProducts(
+            @RequestBody List<PurchaseProductRequest> purchaseProductRequest
+    ) {
+        return ResponseEntity.ok(productService.purchaseProducts(purchaseProductRequest));
+    }
+
     @GetMapping("/{product-id}")
     public ResponseEntity<ProductResponse> findProductById(
             @PathVariable("product-id") Integer productId
