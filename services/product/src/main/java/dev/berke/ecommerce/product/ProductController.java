@@ -3,10 +3,7 @@ package dev.berke.ecommerce.product;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/products")
@@ -18,5 +15,12 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<Integer> createProduct(@RequestBody @Valid ProductRequest productRequest) {
         return ResponseEntity.ok(productService.createProduct(productRequest));
+    }
+
+    @GetMapping("/{product-id}")
+    public ResponseEntity<ProductResponse> findProductById(
+            @PathVariable("product-id") Integer productId
+    ) {
+        return ResponseEntity.ok(productService.findProductById(productId));
     }
 }
