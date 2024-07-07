@@ -26,7 +26,7 @@ public class OrderService {
         this.productClient.purchaseProducts(orderRequest.products());
 
         // persist order (save order object)
-
+        var order = this.orderRepository.save(orderMapper.toOrder(orderRequest));
 
         // persist orderlines (save orderlines)
 
