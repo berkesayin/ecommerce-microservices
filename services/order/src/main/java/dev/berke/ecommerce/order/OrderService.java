@@ -2,7 +2,10 @@ package dev.berke.ecommerce.order;
 
 import dev.berke.ecommerce.customer.CustomerClient;
 import dev.berke.ecommerce.exception.BusinessException;
+import dev.berke.ecommerce.orderline.OrderLineRequest;
+import dev.berke.ecommerce.orderline.OrderLineService;
 import dev.berke.ecommerce.product.ProductClient;
+import dev.berke.ecommerce.product.PurchaseRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,7 @@ public class OrderService {
     private final OrderMapper orderMapper;
     private final CustomerClient customerClient;
     private final ProductClient productClient;
+    private final OrderLineService orderLineService;
 
 
     public Integer createOrder(OrderRequest orderRequest) {
@@ -29,7 +33,16 @@ public class OrderService {
         var order = this.orderRepository.save(orderMapper.toOrder(orderRequest));
 
         // persist orderlines (save orderlines)
-
+        for (PurchaseRequest purchaseRequest: orderRequest.products()) {
+            orderLineService.saveOrderLine(
+                    new OrderLineRequest(
+                            null, // id of the orderline
+                            order.getId(),
+                            purchaseRequest.productId(),
+                            purchaseRequest.quantity()
+                    )
+            );
+        }
 
         // payment process
 
