@@ -6,6 +6,8 @@ import dev.berke.ecommerce.kafka.OrderConfirmation;
 import dev.berke.ecommerce.kafka.OrderProducer;
 import dev.berke.ecommerce.orderline.OrderLineRequest;
 import dev.berke.ecommerce.orderline.OrderLineService;
+import dev.berke.ecommerce.payment.PaymentClient;
+import dev.berke.ecommerce.payment.PaymentRequest;
 import dev.berke.ecommerce.product.ProductClient;
 import dev.berke.ecommerce.product.PurchaseRequest;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,6 +27,7 @@ public class OrderService {
     private final ProductClient productClient;
     private final OrderLineService orderLineService;
     private final OrderProducer orderProducer;
+    private final PaymentClient paymentClient;
 
 
     public Integer createOrder(OrderRequest orderRequest) {
@@ -51,8 +54,15 @@ public class OrderService {
             );
         }
 
-        // payment process
-
+        // start payment process
+        var paymentRequest = new PaymentRequest(
+            orderRequest.amount(),
+            orderRequest.paymentMethod(),
+            order.getId(),
+            order.getReference(),
+            customer
+        );
+        paymentClient.requestOrderPayment(paymentRequest);
 
         // send the order confirmation (notification service, use kafka)
         orderProducer.sendOrderConfirmation(
