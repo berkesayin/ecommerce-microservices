@@ -1,6 +1,8 @@
-# E-Commerce Microservices
+# Microservices Application With Spring
 
-# Run Docker Services
+This is a microservices application developed with Domain Driven Design, Spring Cloud, Spring Boot, Docker, Kafka, PostgreSQL and MongoDB technologies.
+
+### Run Docker Services
 
 ```sh
 docker compose up --build
